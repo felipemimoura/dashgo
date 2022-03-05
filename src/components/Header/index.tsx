@@ -1,9 +1,14 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import Logo from "./Logo";
 import { NotificatonBar } from "./NotificationBar";
 import { Profile } from "./Profile";
 import Search from "./Search";
+
 export default function Header() {
+  const isWideView = useBreakpointValue({
+    base: false,
+    lg: true,
+  });
   return (
     <Flex
       as="header"
@@ -17,11 +22,11 @@ export default function Header() {
     >
       <Logo />
 
-      <Search />
+      {isWideView && <Search />}
 
       <NotificatonBar />
 
-      <Profile />
+      <Profile showProfileData={isWideView} />
     </Flex>
   );
 }
