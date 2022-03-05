@@ -14,6 +14,7 @@ import {
   Tr,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import Header from "../../components/Header";
 import Pagination from "../../components/Pagination";
@@ -35,16 +36,17 @@ export default function UserList() {
             <Heading size="lg" fontWeight="normal">
               Usuários cadastrados
             </Heading>
-
-            <Button
-              as="a"
-              size="sm"
-              fontSize="sm"
-              colorScheme="pink"
-              leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-            >
-              Criar novo
-            </Button>
+            <Link href="./users/create">
+              <Button
+                as="a"
+                size="sm"
+                fontSize="sm"
+                colorScheme="pink"
+                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+              >
+                Criar novo
+              </Button>
+            </Link>
           </Flex>
           <Table colorScheme="whiteAlpha">
             <Thead>
@@ -54,7 +56,6 @@ export default function UserList() {
                 </Th>
                 <Th>Usuários</Th>
                 {isWideView && <Th>Data de cadastro</Th>}
-                {/* <Th w="8"></Th> */}
               </Tr>
             </Thead>
             <Tbody>
@@ -67,17 +68,6 @@ export default function UserList() {
                   <Text fontSize="sm">felipemimoura@gmail.com</Text>
                 </Td>
                 {isWideView && <Td>30 de março de 2022</Td>}
-                {/* <Td>
-                  <Button
-                    as="a"
-                    size="sm"
-                    fontSize="sm"
-                    colorScheme="purple"
-                    leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
-                  >
-                    editar
-                  </Button>
-                </Td> */}
               </Tr>
             </Tbody>
           </Table>
