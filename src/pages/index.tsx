@@ -23,7 +23,6 @@ const Home: NextPage = () => {
 
   const handleSignIn: SubmitHandler<FieldValues> = async (values) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(values);
   };
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center">
