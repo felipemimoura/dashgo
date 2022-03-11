@@ -42,7 +42,6 @@ export default function CreateUser() {
 
   const handleCreate: SubmitHandler<FieldValues> = async (values) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(values);
   };
   return (
     <Box>
