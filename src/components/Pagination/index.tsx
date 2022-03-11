@@ -37,7 +37,7 @@ export default function Pagination({
           Math.min(currentPage + siblingsCount, lastPage)
         )
       : [];
-  console.log(lastPage);
+
   return (
     <Stack
       direction={["column", "row"]}
@@ -89,7 +89,7 @@ export default function Pagination({
 
         {currentPage + siblingsCount < lastPage && (
           <>
-            {currentPage > 2 + siblingsCount && (
+            {currentPage + 1 + siblingsCount < lastPage && (
               <Text color="gray.300" width="6" textAlign="center">
                 ...
               </Text>
