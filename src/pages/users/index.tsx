@@ -62,7 +62,7 @@ export default function UserList() {
                 <Spinner size="sm" color="gray.500" ml="4" />
               )}
             </Heading>
-            <NextLink href="./users/create">
+            <NextLink href="./users/create" passHref>
               <Button
                 as="a"
                 size="sm"
