@@ -8,13 +8,24 @@ import {
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import * as yup from "yup";
 import { Input } from "../../components/form/Input";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { api } from "../../services/api";
+import { queryClient } from "../../services/queryClient";
+
+type CreateUserFormData = {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+};
 
 const createUserFormSchema = yup.object({
   name: yup.string().required("Nome Obrigatório"),
@@ -32,6 +43,24 @@ const createUserFormSchema = yup.object({
 });
 
 export default function CreateUser() {
+  const router = useRouter();
+  const createUser = useMutation(
+    async (user: CreateUserFormData) => {
+      const response = await api.post("users", {
+        user: {
+          ...user,
+          created_at: new Date(),
+        },
+      });
+      return response.data.user;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("users");
+      },
+    }
+  );
+
   const {
     register,
     handleSubmit,
@@ -40,8 +69,10 @@ export default function CreateUser() {
     resolver: yupResolver(createUserFormSchema),
   });
 
-  const handleCreate: SubmitHandler<FieldValues> = async (values) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+  const handleCreate: SubmitHandler<CreateUserFormData> = async (values) => {
+    await createUser.mutateAsync(values);
+
+    router.push("/users");
   };
   return (
     <Box>
@@ -99,7 +130,7 @@ export default function CreateUser() {
 
           <Flex mt="8" justify="flex-end">
             <HStack spacing="4">
-              <Link href="/users">
+              <Link href="/users" passHref>
                 <Button colorScheme="whiteAlpha">Cancelar</Button>
               </Link>
               <Button type="submit" colorScheme="pink" isLoading={isSubmitting}>
